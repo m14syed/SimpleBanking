@@ -47,10 +47,10 @@ class ChequingAccount:
 #Rewards bank account which gives a rebate of 2% on purchases from select stores
 class RewardAccount(ChequingAccount):
      def purchase(self, purAmount, store):
+        self.cost = purAmount
         try:
             if store == "Food Basics" or store == "Walmart" or store == "BestBuy" or store == "No Frills":
                 self.checkFunds(purAmount)
-                self.cost = purAmount
                 self.balance = self.balance - (purAmount)
                 print(f"\nA purchase of ${self.cost} has been made")
                 self.deposit(purAmount*0.02)
