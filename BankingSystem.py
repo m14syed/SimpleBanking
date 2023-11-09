@@ -1,5 +1,5 @@
 from BankAccts import *
 
-Sohaib = RewardAccount(10000, "Sohaib")
+Sohaib = SavingsAccount(10000, "Sohaib")
 
-Sohaib.purchase(500, "SuperStore")
+Sohaib.withdraw(500)

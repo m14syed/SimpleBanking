@@ -32,7 +32,7 @@ class ChequingAccount:
             print(f"\n${self.balance} has been withdrawn from Account {self.name}")
             self.getBalance()
         except BalanceException as error:
-            print(f"\nWithdraw Failed: {error}")
+            print(f"\nWithdrawal Failed: {error}")
     
     def transfer(self, transAmount, recepient): #Transfers money from one account to another (first checks if there is enough)
         try:
@@ -63,12 +63,16 @@ class RewardAccount(ChequingAccount):
             print(f"\nPurchase Failed: {error}")
 
 #Savings bank account which has a withdrawal fee of $5
-# class SavingsAccount(CreditAccount):
-#      def withdraw(self, withAmount):
-#         try:
-#             self.checkFunds(withAmount)
-#             self.balance = self.balance - (withAmount + 5)
-#             print(f"\n${self.balance} has been withdrawn from Account {self.name}")
-#             self.getBalance()
-#         except BalanceException as error:
-#             print(f"\nWithdraw Failed: {error}")
+class SavingsAccount(ChequingAccount):
+    def __init__(self, InitialAmount, Acctname): 
+        super().__init__(InitialAmount, Acctname)
+        self.fee = 5
+    
+    def withdraw(self, withAmount):
+        try:
+            self.checkFunds(withAmount + self.fee)
+            self.balance = self.balance - (withAmount + self.fee)
+            print(f"\n${self.balance} has been withdrawn from Account {self.name}")
+            self.getBalance()
+        except BalanceException as error:
+            print(f"\nWithdrawal Failed: {error}")
