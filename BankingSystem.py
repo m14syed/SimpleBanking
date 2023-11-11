@@ -1,5 +1,9 @@
 from BankAccts import *
 
-Sohaib = SavingsAccount(10000, "Sohaib")
+Sohaib = CreditAccount(5000, "Sohaib")
 
-Sohaib.withdraw(500)
+Sohaib.purchase(5000, "Ikea")
+
+Sohaib.deposit(1000)
+
+Sohaib.purchase(100, "Ikea")
