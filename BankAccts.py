@@ -70,10 +70,10 @@ class CreditAccount(ChequingAccount):
     def purchase(self, purAmount, store): #Makes a purchase from a store and gives a rebate of 2% if the store is eligible
         purAmount
         try:
-            if store == "Food Basics" or store == "Walmart" or store == "BestBuy" or store == "No Frills":
+            if store in ["Food Basics", "Walmart", "BestBuy", "No Frills"]:
                 self.checkFunds(purAmount)
                 self.balance = self.balance + (purAmount)
-                print(f"\nA purchase of ${self.cost:0.02f} has been made\nYou have recieved a rebate of ${purAmount*0.02:0.02f}")
+                print(f"\nA purchase of ${purAmount:0.02f} has been made\nYou have recieved a rebate of ${purAmount*0.02:0.02f}")
                 self.deposit(purAmount*0.02, from_purchase=True)
                 self.getBalance()
             else: 
@@ -98,4 +98,4 @@ class SavingsAccount(ChequingAccount):
             print(f"\n${withAmount:0.02f} has been withdrawn from Account {self.name}\n***A fee of ${self.fee:0.02f} has been charged***")
             self.getBalance()
         except BalanceException as error:
-            print(f"\n***Withdrawal of ${withAmount:0.02f} Failed: {error}***")
+            print(f"\n***Withdrawal of ${withAmount:0.02f} Failed: {error}***")                                  
