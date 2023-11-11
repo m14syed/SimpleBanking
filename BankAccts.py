@@ -44,6 +44,7 @@ class ChequingAccount:
         except BalanceException as error:
             print(f"\n------------!!TRANSFER FAILED!!-------------\n***{error}***")
 
+
 #Credit bank account which gives a rebate of 2% on purchases from select stores
 class CreditAccount(ChequingAccount):
     def __init__(self, creditlimit, Acctname): #Initializes the class with a credit limit and an account name
@@ -82,6 +83,7 @@ class CreditAccount(ChequingAccount):
                 self.getBalance()
         except BalanceException as error:
             print(f"\nPurchase Failed: {error}")
+
 
 #Savings bank account which has a withdrawal fee of $5
 class SavingsAccount(ChequingAccount): 
