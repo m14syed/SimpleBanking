@@ -22,17 +22,17 @@ class ChequingAccount:
             return
         else:
             raise BalanceException(
-                f"Account {self.name} has insufficient funds"
+                f"Account {self.name} has Insufficient Funds"
             )
     
     def withdraw(self, withAmount): #Withdraws money from acccount (first checks if there is enough)
         try:
             self.checkFunds(withAmount)
             self.balance = self.balance - withAmount
-            print(f"\n${self.balance:0.02f} has been withdrawn from Account {self.name}")
+            print(f"\n${withAmount:0.02f} has been withdrawn from Account {self.name}")
             self.getBalance()
         except BalanceException as error:
-            print(f"\nWithdrawal Failed: {error}")
+            print(f"\nWithdrawal of {withAmount:0.02f} Failed: {error}")
     
     def transfer(self, transAmount, recepient): #Transfers money from one account to another (first checks if there is enough)
         try:
@@ -40,7 +40,7 @@ class ChequingAccount:
             self.checkFunds(transAmount)
             self.withdraw(transAmount)
             recepient.deposit(transAmount)
-            print("\n------------TRANSFER WAS SUCCESSFULL------------\n")
+            print("\n-----------TRANSFER WAS SUCCESSFULL----------\n")
         except BalanceException as error:
             print(f"\n------------!!TRANSFER FAILED!!-------------\n***{error}***")
 
@@ -58,7 +58,7 @@ class CreditAccount(ChequingAccount):
             return
         else:
             raise BalanceException(
-                f"Account {self.name} has insufficient funds"
+                f"Account {self.name} has Insufficient Funds"
             )
 
     def deposit(self, depAmount, from_purchase=False): #deposits money into account (if not from a purchase, it will not print the rebate)
@@ -82,7 +82,7 @@ class CreditAccount(ChequingAccount):
                 print(f"\nA purchase of ${purAmount:0.02f} has been made")
                 self.getBalance()
         except BalanceException as error:
-            print(f"\nPurchase Failed: {error}")
+            print(f"\n***Purchase of ${purAmount:0.02f} Failed: {error}***")
 
 
 #Savings bank account which has a withdrawal fee of $5
@@ -98,4 +98,4 @@ class SavingsAccount(ChequingAccount):
             print(f"\n${withAmount:0.02f} has been withdrawn from Account {self.name}\n***A fee of ${self.fee:0.02f} has been charged***")
             self.getBalance()
         except BalanceException as error:
-            print(f"\n***Withdrawal Failed: {error}***")
+            print(f"\n***Withdrawal of ${withAmount:0.02f} Failed: {error}***")

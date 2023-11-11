@@ -1,9 +1,7 @@
 from BankAccts import *
 
-Sohaib = CreditAccount(5000, "Sohaib")
+JakeCredit = CreditAccount(5000, "JakeCredit")
 
-Sohaib.purchase(5000, "Ikea")
+JakeDebit = ChequingAccount(5000, "Jake")
 
-Sohaib.deposit(1000)
-
-Sohaib.purchase(100, "Ikea")
+JakeDebit.transfer(500, JakeCredit)
