@@ -28,7 +28,8 @@ def account_operations(account, accounts):
         print("2. Withdraw")
         print("3. Check Balance")
         print("4. Transfer Funds")
-        print("5. Exit")
+        print("5. Purchase (Only for Credit Accounts)")
+        print("6. Exit")
 
         choice = input("Enter choice (1-5): ")
 
@@ -48,6 +49,10 @@ def account_operations(account, accounts):
             else:
                 print("Invalid recipient.")
         elif choice == "5":
+            amount = float(input("Enter Purchase Amount: "))
+            store_name = str(input("Enter Store Name: "))
+            account.purchase(amount, store_name)
+        elif choice == "6":
             break
         else:
             print("Invalid choice.")
