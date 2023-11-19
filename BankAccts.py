@@ -98,4 +98,4 @@ class SavingsAccount(ChequingAccount):
             print(f"\n${withAmount:0.02f} has been withdrawn from Account {self.name}\n***A fee of ${self.fee:0.02f} has been charged***")
             self.getBalance()
         except BalanceException as error:
-            print(f"\n***Withdrawal of ${withAmount:0.02f} Failed: {error}***")                                  
+            print(f"\n***Withdrawal of ${withAmount:0.02f} Failed: {error}***")      
