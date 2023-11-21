@@ -19,9 +19,10 @@ def create_account(acct_type, acct_name, initial_amount):
     messagebox.showinfo("Success", f"Account {acct_name} created successfully.")
 
 def open_create_account_window():
-    create_account_window = tk.Toplevel()
+    create_account_window = tk.Toplevel() 
 
-    tk.Label(create_account_window, text="Account Name:").pack()
+    tk.Label(create_account_window, text="Account Name:").pack() 
+
     acct_name_entry = tk.Entry(create_account_window)
     acct_name_entry.pack()
 
@@ -60,29 +61,45 @@ def check_balance(account):
     balance = account.getBalance()
     messagebox.showinfo("Balance", f"Account {account.name} balance: ${balance}")
 
-def transfer(account, amount, recipient):
-    try:
-        account.transfer(amount, recipient)
-        messagebox.showinfo("Success", f"Transferred ${amount} from {account.name} to {recipient.name}")
-    except BalanceException as e:
-        messagebox.showerror("Error", str(e))
+def check_balance(account):
+    # Check if the account exists
+    if account:
+        balance = account.getBalance()
+        messagebox.showinfo("Balance", f"Account {account.name} balance: ${balance}")
+    else:
+        messagebox.showerror("Error", "Account not found.")
 
+def transfer(source_account, amount, recipient_account):
+    # Check if both accounts exist
+    if source_account and recipient_account:
+        try:
+            source_account.transfer(amount, recipient_account)
+            messagebox.showinfo("Success", f"Transferred ${amount} from {source_account.name} to {recipient_account.name}")
+        except BalanceException as e:
+            messagebox.showerror("Error", str(e))
+    else:
+        messagebox.showerror("Error", "One or more accounts not found.")
 
 def open_account_operations_window():
     account_operations_window = tk.Toplevel()
 
-    tk.Label(account_operations_window, text="Select Account:").pack()
-    selected_account_var = tk.StringVar()
-    account_list = tk.OptionMenu(account_operations_window, selected_account_var, *accounts.keys())
-    account_list.pack()
+    tk.Label(account_operations_window, text="Select Source Account:").pack()
+    source_account_var = tk.StringVar()
+    source_account_list = tk.OptionMenu(account_operations_window, source_account_var, *accounts.keys())
+    source_account_list.pack()
+
+    tk.Label(account_operations_window, text="Select Destination Account:").pack()
+    destination_account_var = tk.StringVar()
+    destination_account_list = tk.OptionMenu(account_operations_window, destination_account_var, *accounts.keys())
+    destination_account_list.pack()
 
     amount_entry = tk.Entry(account_operations_window)
     amount_entry.pack()
 
-    tk.Button(account_operations_window, text="Transfer", command=lambda: transfer(accounts[selected_account_var.get()], float(amount_entry.get()), accounts["Chequing"])).pack()
-    tk.Button(account_operations_window, text="Deposit", command=lambda: deposit(accounts[selected_account_var.get()], float(amount_entry.get()))).pack()
-    tk.Button(account_operations_window, text="Withdraw", command=lambda: withdraw(accounts[selected_account_var.get()], float(amount_entry.get()))).pack()
-    tk.Button(account_operations_window, text="Check Balance", command=lambda: check_balance(accounts[selected_account_var.get()])).pack()
+    tk.Button(account_operations_window, text="Transfer", command=lambda: transfer(accounts.get(source_account_var.get()), float(amount_entry.get()), accounts.get(destination_account_var.get()))).pack()
+    tk.Button(account_operations_window, text="Deposit", command=lambda: deposit(accounts.get(source_account_var.get()), float(amount_entry.get()))).pack()
+    tk.Button(account_operations_window, text="Withdraw", command=lambda: withdraw(accounts.get(source_account_var.get()), float(amount_entry.get()))).pack()
+    tk.Button(account_operations_window, text="Check Balance", command=lambda: check_balance(accounts.get(source_account_var.get()))).pack()
 
 if __name__ == "__main__":
     main_window()
