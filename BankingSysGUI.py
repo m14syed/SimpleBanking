@@ -88,15 +88,23 @@ def open_account_operations_window():
     source_account_list = tk.OptionMenu(account_operations_window, source_account_var, *accounts.keys())
     source_account_list.pack()
 
-    tk.Label(account_operations_window, text="Select Destination Account:").pack()
-    destination_account_var = tk.StringVar()
-    destination_account_list = tk.OptionMenu(account_operations_window, destination_account_var, *accounts.keys())
-    destination_account_list.pack()
-
     amount_entry = tk.Entry(account_operations_window)
     amount_entry.pack()
 
-    tk.Button(account_operations_window, text="Transfer", command=lambda: transfer(accounts.get(source_account_var.get()), float(amount_entry.get()), accounts.get(destination_account_var.get()))).pack()
+    # Function to create and show destination account selection
+    def show_destination_account():
+        tk.Label(account_operations_window, text="Select Destination Account:").pack()
+        destination_account_var = tk.StringVar()
+        destination_account_list = tk.OptionMenu(account_operations_window, destination_account_var, *accounts.keys())
+        destination_account_list.pack()
+
+        # Update transfer button command with destination account
+        transfer_button.config(command=lambda: transfer(accounts.get(source_account_var.get()), float(amount_entry.get()), accounts.get(destination_account_var.get())))
+
+    # Transfer button initially without destination account selection
+    transfer_button = tk.Button(account_operations_window, text="Transfer", command=show_destination_account)
+    transfer_button.pack()
+
     tk.Button(account_operations_window, text="Deposit", command=lambda: deposit(accounts.get(source_account_var.get()), float(amount_entry.get()))).pack()
     tk.Button(account_operations_window, text="Withdraw", command=lambda: withdraw(accounts.get(source_account_var.get()), float(amount_entry.get()))).pack()
     tk.Button(account_operations_window, text="Check Balance", command=lambda: check_balance(accounts.get(source_account_var.get()))).pack()
