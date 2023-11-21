@@ -58,10 +58,6 @@ def withdraw(account, amount):
         messagebox.showerror("Error", str(e))
 
 def check_balance(account):
-    balance = account.getBalance()
-    messagebox.showinfo("Balance", f"Account {account.name} balance: ${balance}")
-
-def check_balance(account):
     # Check if the account exists
     if account:
         balance = account.getBalance()
@@ -80,6 +76,17 @@ def transfer(source_account, amount, recipient_account):
     else:
         messagebox.showerror("Error", "One or more accounts not found.")
 
+def purchase (account, amount, store):
+    # Check if the account exists
+    if account:
+        try:
+            account.purchase(amount, store)
+            messagebox.showinfo("Success", f"Purchased ${amount} from {store} with {account.name}")
+        except BalanceException as e:
+            messagebox.showerror("Error", str(e))
+    else:
+        messagebox.showerror("Error", "Account not found.")
+
 def open_account_operations_window():
     account_operations_window = tk.Toplevel()
 
@@ -93,7 +100,7 @@ def open_account_operations_window():
 
     # Function to create and show destination account selection
     def show_destination_account():
-        tk.Label(account_operations_window, text="Select Destination Account:").pack()
+        tk.Label(account_operations_window, text="Select Destination Account:").pack()#
         destination_account_var = tk.StringVar()
         destination_account_list = tk.OptionMenu(account_operations_window, destination_account_var, *accounts.keys())
         destination_account_list.pack()
@@ -104,6 +111,20 @@ def open_account_operations_window():
     # Transfer button initially without destination account selection
     transfer_button = tk.Button(account_operations_window, text="Transfer", command=show_destination_account)
     transfer_button.pack()
+
+    #Function to create and show store selection
+    def show_store():
+        tk.Label(account_operations_window, text="Select Store:").pack()#
+        store_var = tk.StringVar()
+        store_list = tk.OptionMenu(account_operations_window, store_var, "Food Basics", "Walmart", "BestBuy", "No Frills", "Other")
+        store_list.pack()
+
+        # Update purchase button command with store
+        purchase_button.config(command=lambda: purchase(accounts.get(source_account_var.get()), float(amount_entry.get()), store_var.get()))
+
+    # Purchase button initially without store selection
+    purchase_button = tk.Button(account_operations_window, text="Purchase", command=show_store)
+    purchase_button.pack()
 
     tk.Button(account_operations_window, text="Deposit", command=lambda: deposit(accounts.get(source_account_var.get()), float(amount_entry.get()))).pack()
     tk.Button(account_operations_window, text="Withdraw", command=lambda: withdraw(accounts.get(source_account_var.get()), float(amount_entry.get()))).pack()
