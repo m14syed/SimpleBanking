@@ -10,3 +10,5 @@ This banking application is a Python-based simulation of basic banking operation
 - **Custom Exception Handling**: Implements a `BalanceException` for handling insufficient funds scenarios.
 - **Interactive Console Interface**: Allows users to create accounts, perform transactions, and access account information through a user-friendly console interface.
 - **Basic GUI** Using Tkinter as an alternate method to using the console interface. Allows easier use and more flexibility for the user
+
+- Banking System file runs the program through the terminal/console, BankSysGUI file runs using the Tkinter based GUI
